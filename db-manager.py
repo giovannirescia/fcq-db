@@ -9,6 +9,8 @@ Usage:
   db-manager.py [-i <values>] [-q <query>] [-a <arg>]
   db-manager.py -h | --help
 
+Example:
+        $ python db-manager.py -q 'select chemist_id as "DNI", aname as "Name" from chapter6.chemist' 
 Options:
   -i <values> Insert values in the database.
   -q <query>  Make a query.
@@ -28,10 +30,15 @@ def main(opts):
     obchord_conn = psycopg2.connect("dbname=obchord user=giovanni")
     obchord_cursor = obchord_conn.cursor()
     obchord_cursor.execute("select ob.cansmiles('c1ccccc1C(=O)NC');")
-    print(obchord_cursor.fetchall())
+    print("\nIgnore next lines:")
+    print('c1ccccc1C(=O)NC   => ',obchord_cursor.fetchall()[0][0], " (canonical)")
+#    print(obchord_cursor.fetchall())
+    print("\n")
     obchord_cursor.execute("select ob.cansmiles('C=CC(O)C');")
-    print(q)
-    print(q.replace('$$$',arg))
+    try:
+        print(q.replace('$$$',arg))
+    except:
+        pass
     cursor = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
     try:
         cursor.execute(q)
@@ -44,15 +51,17 @@ def main(opts):
         for elem in cursor.fetchall():
             print('\t'+elem[0])
     # 'select * from chapter6.chemist'
-#    print("\nQuery: ", q)
+    # python db-manager.py -q 'select chemist_id as "DNI", aname as "Name" from chapter6.chemist' 
     if query_ok:
+        print("\nQuery: ", q)
+        print("\n")
+        headers = [des[0] for des in cursor.description]
         table = cursor.fetchall()
-        headers = ['id','name']
-        import ipdb; ipdb.set_trace()
-        tabulate(table, headers, tablefmt="orgtbl")
+        print(tabulate(table, headers, tablefmt="orgtbl"))
 
-#    cursor.execute("select table_name from information_schema.tables where table_schema = 'chapter6'")
-#    print (cursor.fetchall())
+    # list tables from schema
+    # cursor.execute("select table_name from information_schema.tables where table_schema = 'chapter6'")
+    cursor.close()
     conn.close()
 
 if __name__ == '__main__':

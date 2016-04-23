@@ -23,15 +23,15 @@ insert into alocation values (218, 'a', 'b');
 insert into alocation values (219, 'a', 'b');
 
 insert into chemist values (310, 'a');
-insert into chemist values (311, 'aq');
-insert into chemist values (312, 'aa');
-insert into chemist values (313, 'aaa');
-insert into chemist values (314, 'abaa');
-insert into chemist values (315, 'ba');
-insert into chemist values (316, 'ab');
-insert into chemist values (317, 'as');
-insert into chemist values (318, 'asd');
-insert into chemist values (319, 'ad');
+insert into chemist values (311, 'b');
+insert into chemist values (312, 'c');
+insert into chemist values (313, 'd');
+insert into chemist values (314, 'e');
+insert into chemist values (315, 'f');
+insert into chemist values (316, 'g');
+insert into chemist values (317, 'h');
+insert into chemist values (318, 'i');
+insert into chemist values (319, 'j');
 
 insert into checkout values (110, 210, 310, current_timestamp);
 insert into checkout values (111, 212, 311, current_timestamp);
